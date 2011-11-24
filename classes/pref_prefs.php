@@ -214,7 +214,8 @@ class Pref_Prefs extends Protected_Handler {
 
 		print "</form>";
 
-		if (!SINGLE_USER_MODE && !(ALLOW_REMOTE_USER_AUTH && AUTO_LOGIN)) {
+		if ((!SINGLE_USER_MODE && !(ALLOW_REMOTE_USER_AUTH && AUTO_LOGIN)) && \
+      (!defined('IMAP_AUTH_SERVER') || !IMAP_AUTH_SERVER)) {
 
 			$result = db_query($this->link, "SELECT id FROM ttrss_users
 				WHERE id = ".$_SESSION["uid"]." AND pwd_hash

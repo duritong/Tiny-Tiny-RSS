@@ -739,6 +739,33 @@
 					}
 				}
 
+      } elseif (($login != 'admin') && defined('IMAP_AUTH_SERVER') && IMAP_AUTH_SERVER) {
+        require_once 'lib/imap-auth/imap-auth.inc.php';
+        if (authenticate_imap($login,$password,IMAP_AUTH_SERVER,IMAP_AUTH_PORT,IMAP_AUTH_TLS,IMAP_AUTH_CERT_VALIDATION)) {
+          $query = "SELECT id,login,access_level,pwd_hash
+                FROM ttrss_users WHERE
+                login = '$login'";
+
+          if (defined('AUTO_CREATE_USER') && AUTO_CREATE_USER) {
+            $result = db_query($link, $query);
+
+            // First login ?
+            // We generate a random password so not all sessions contain an empty password
+            // that will be part of the validation
+            if (db_num_rows($result) == 0) {
+              $salt = substr(bin2hex(get_random_bytes(125)), 0, 250);
+              $pwd_hash = encrypt_password(make_password(24), $salt, true);
+
+              $query2 = "INSERT INTO ttrss_users
+                (login,access_level,last_login,created,pwd_hash,salt)
+                VALUES ('$login', 0, null, NOW(), '$pwd_hash','$salt')";
+              db_query($link, $query2);
+            }
+          }
+        } else {
+          return false;
+        }
+
 			} else if (get_schema_version($link) > 87) {
 				$result = db_query($link, "SELECT salt FROM ttrss_users WHERE
 					login = '$login'");
