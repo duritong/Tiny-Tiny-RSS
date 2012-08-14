@@ -734,7 +734,7 @@
 
 						$query2 = "INSERT INTO ttrss_users
 								(login,access_level,last_login,created,pwd_hash,salt)
-								VALUES ('$login', 0, null, NOW(), '$pwd_hash','$salt')";
+								VALUES ('$login', 0, null, ".last_login_date().", '$pwd_hash','$salt')";
 						db_query($link, $query2);
 					}
 				}
@@ -758,7 +758,7 @@
 
               $query2 = "INSERT INTO ttrss_users
                 (login,access_level,last_login,created,pwd_hash,salt)
-                VALUES ('$login', 0, null, NOW(), '$pwd_hash','$salt')";
+                VALUES ('$login', 0, null, ".last_login_date().", '$pwd_hash','$salt')";
               db_query($link, $query2);
             }
           }
@@ -828,7 +828,7 @@
 				$_SESSION["access_level"] = db_fetch_result($result, 0, "access_level");
 				$_SESSION["csrf_token"] = sha1(uniqid(rand(), true));
 
-				db_query($link, "UPDATE ttrss_users SET last_login = NOW() WHERE id = " .
+				db_query($link, "UPDATE ttrss_users SET last_login = ".last_login_date()." WHERE id = " .
 					$_SESSION["uid"]);
 
 
@@ -1035,7 +1035,7 @@
 				}
 			} else {
 				/* bump login timestamp */
-				db_query($link, "UPDATE ttrss_users SET last_login = NOW() WHERE id = " .
+				db_query($link, "UPDATE ttrss_users SET last_login = ".last_login_date()." WHERE id = " .
 					$_SESSION["uid"]);
 
 				if ($_SESSION["language"] && SESSION_COOKIE_LIFETIME > 0) {
@@ -5617,5 +5617,12 @@
 		}
 
 		return null;
+	}
+	function last_login_date() {
+		if (defined('LAST_LOGIN_PRIVACY') && LAST_LOGIN_PRIVACY) {
+			return "DATE_FORMAT(NOW() ,'%Y-%m-01')";
+		} else {
+			return "NOW()";
+		}
 	}
 ?>

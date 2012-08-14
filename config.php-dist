@@ -122,6 +122,11 @@
   define('IMAP_AUTH_PORT','143');
   // Port of the imap server
 
+  define('LAST_LOGIN_PRIVACY',false);
+  // Whether the exact last login date should be logged
+  // or just the month in which the last login happened.
+  // This can preserve some privacy of the user, as last logins
+  // might not anymore directly be linkable to access logs.
 
 	// ***********************************
 	// *** Self-registrations by users ***
