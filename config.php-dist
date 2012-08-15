@@ -106,27 +106,27 @@
 	// You want new users to be automaticaly created in tt-rss database
 	// on first login
 
-  define('IMAP_AUTH_SERVER', false);
-  // Set this to a hostname of an imap-server. If set to a hostname will
-  // authenticated against an imap server. You can combine that with the
-  // option AUTO_CREATE_USER to automaticaly create users on first login.
+	define('IMAP_AUTH_SERVER', false);
+	// Set this to a hostname of an imap-server. If set to a hostname will
+	// authenticated against an imap server. You can combine that with the
+	// option AUTO_CREATE_USER to automaticaly create users on first login.
 
-  define('IMAP_AUTH_CERT_VALIDATION','validate-cert');
-  // Whether cert of IMAP server should be validated or not
-  // Values: validate-cert or novalidate-cert
+	define('IMAP_AUTH_CERT_VALIDATION','validate-cert');
+	// Whether cert of IMAP server should be validated or not
+	// Values: validate-cert or novalidate-cert
 
-  define('IMAP_AUTH_TLS','tls');
-  // Connection security to use for IMAP connections.
-  // Values: tls, ssl, notls
+	define('IMAP_AUTH_TLS','tls');
+	// Connection security to use for IMAP connections.
+	// Values: tls, ssl, notls
 
-  define('IMAP_AUTH_PORT','143');
-  // Port of the imap server
+	define('IMAP_AUTH_PORT','143');
+	// Port of the imap server
 
-  define('LAST_LOGIN_PRIVACY',false);
-  // Whether the exact last login date should be logged
-  // or just the month in which the last login happened.
-  // This can preserve some privacy of the user, as last logins
-  // might not anymore directly be linkable to access logs.
+	define('LAST_LOGIN_PRIVACY',false);
+	// Whether the exact last login date should be logged
+	// or just the month in which the last login happened.
+	// This can preserve some privacy of the user, as last logins
+	// might not anymore directly be linkable to access logs.
 
 	// ***********************************
 	// *** Self-registrations by users ***
